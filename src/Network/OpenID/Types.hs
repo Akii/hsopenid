@@ -17,6 +17,8 @@ module Network.OpenID.Types (
   , Params
   , ReturnTo
   , Realm
+  , Request(..)
+  , Response(..)
   , Resolver
   , Provider
   , parseProvider
@@ -32,9 +34,8 @@ module Network.OpenID.Types (
 import Data.List
 import Data.Word
 import Network.URI
-
-import Network.HTTP
-import Network.Stream
+import Network.HTTP.Types
+import Data.ByteString.Lazy (ByteString)
 
 --------------------------------------------------------------------------------
 -- Types
@@ -84,7 +85,7 @@ data Association = Association
 
 
 -- | Parameter lists for communication with the server
-type Params = [(String,String)]
+type Params = [(String, String)]
 
 -- | A return to path
 type ReturnTo = String
@@ -93,7 +94,20 @@ type ReturnTo = String
 type Realm = String
 
 -- | A way to resolve an HTTP request
-type Resolver m = Request String -> m (Either ConnError (Response String))
+data Request = Request
+  { reqUri     :: URI
+  , reqMethod  :: Method
+  , reqHeaders :: RequestHeaders
+  , reqBody    :: ByteString
+  }
+
+data Response = Response
+  { respStatus  :: Status
+  , respHeaders :: ResponseHeaders
+  , respBody    :: ByteString
+  }
+
+type Resolver m = Request -> m Response
 
 -- | An OpenID provider.
 newtype Provider = Provider { providerURI :: URI } deriving (Eq,Show)

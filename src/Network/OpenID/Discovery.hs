@@ -25,7 +25,6 @@ import Data.Char
 import Data.List
 import Data.Maybe
 import MonadLib
-import Network.HTTP
 import Network.URI
 
 

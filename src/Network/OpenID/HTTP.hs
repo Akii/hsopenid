@@ -28,7 +28,6 @@ module Network.OpenID.HTTP (
   ) where
 
 -- friends
-import Network.OpenID.SSL
 import Network.OpenID.Types
 import Network.OpenID.Utils
 
@@ -39,9 +38,6 @@ import Network.BSD
 import Network.HTTP (Request(..), Response(..), findHeader, RequestMethod(..),
     Header(..), HeaderName(..), normalizeRequest, NormalizeRequestOptions(..),
     defaultNormalizeRequestOptions)
-import Network.Socket
-import Network.HTTP.Stream (ConnError(..), simpleHTTP_)
-import Network.StreamSocket ()  -- Stream instance for Socket in HTTP package
 import Network.URI hiding (query)
 
 
